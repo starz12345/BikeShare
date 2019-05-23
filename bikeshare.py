@@ -2,10 +2,11 @@ import time
 import pandas as pd
 import numpy as np
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+CITY_DATA = {'chicago': 'chicago.csv',
+             'new york city': 'new_york_city.csv',
+             'washington': 'washington.csv'}
 months = ['january', 'february', 'march', 'april', 'may', 'june']
+
 
 def get_filters():
     """
@@ -34,7 +35,6 @@ def get_filters():
             continue
         break
 
-
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     day = ""
     while True:
@@ -44,8 +44,7 @@ def get_filters():
             continue
         break
 
-
-    print('-'*40)
+    print('-' * 40)
     return city, month, day
 
 
@@ -66,7 +65,7 @@ def load_data(city, month, day):
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.weekday_name
 
-    if  month != "all":
+    if month != "all":
         month = months.index(month) + 1
 
         df = df[df['month'] == month]
@@ -88,7 +87,6 @@ def time_stats(df):
     most_month = df['month'].mode().iloc[0]
     print(months[int(most_month) - 1].title())
 
-
     # TO DO: display the most common day of week
     print("\nMost Common Day of the Week")
     most_day = df['day_of_week'].mode().iloc[0]
@@ -101,7 +99,7 @@ def time_stats(df):
     print(most_hour)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+    print('-' * 40)
 
 
 def station_stats(df):
@@ -126,7 +124,7 @@ def station_stats(df):
     print(most_combination)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+    print('-' * 40)
 
 
 def trip_duration_stats(df):
@@ -145,9 +143,8 @@ def trip_duration_stats(df):
     mean_travel_time = np.mean(df['Trip Duration'])
     print(mean_travel_time)
 
-
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+    print('-' * 40)
 
 
 def user_stats(city, df):
@@ -181,13 +178,24 @@ def user_stats(city, df):
         print(str(earliest_by)[:4])
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+    print('-' * 40)
 
 
 def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
+
+        preview = input("\nWould you like to preview the data? Enter yes or no\n")
+        if preview == 'yes':
+            try:
+                lines = int(input("How many lines?  Enter a valid number.\n"))
+                print(df.head(lines))
+                time.sleep(10)
+            except:
+                print("invalid number")
+
+
 
         time_stats(df)
         station_stats(df)
@@ -200,4 +208,4 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+    main()
