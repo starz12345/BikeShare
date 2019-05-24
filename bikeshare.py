@@ -19,24 +19,29 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city = ""
+    print("Which city would you like to see Chicago, New York City or Washington?")
     while True:
         city = input("Enter a city name:").lower().strip()
         city = city.replace(" ", "_")
-        if city not in ("chicago", "new_york_city", "washington"):
+        if city not in ("chicago", "new_york_city", "washington", "nyc"):
             print("City must be chicago, new york city or washington")
             continue
         break
+
+
     # TO DO: get user input for month (all, january, february, ... , june)
     month = ""
+    print("Which month do you want? Type 'all' to see all months.")
     while True:
         month = input("Enter a month: ").lower().strip()
         if month not in ("all", "january", "february", "march", "april", "may", "june"):
-            print("Month must be all, january, february, march, april, may or june")
+            print("Month must be january, february, march, april, may or june")
             continue
         break
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     day = ""
+    print("Which day do you want to see? Type 'all' to see all days.")
     while True:
         day = input("Enter a day: ").lower()
         if day not in ("all", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"):
@@ -90,8 +95,8 @@ def time_stats(df):
     # TO DO: display the most common day of week
     print("\nMost Common Day of the Week")
     most_day = df['day_of_week'].mode().iloc[0]
-    print(most_day)
 
+    print(most_day)
     # TO DO: display the most common start hour
     print("\nMost Common Start Hour")
     df['hour'] = df['Start Time'].dt.hour
