@@ -52,6 +52,21 @@ def get_filters():
     print('-' * 40)
     return city, month, day
 
+def display_data(df):
+    """
+    Displays raw data depending on the user specifications.
+    """
+    print("Would you like to see raw data? Enter yes or no")
+    count = 5
+    while True:
+        preview = input("Enter: ")
+        if preview != 'yes':
+            break
+
+        print(df.head(count)) # or df.sample()
+        count += 5
+        print("Would you like to see more? Enter yes or no")
+
 
 def load_data(city, month, day):
     """
@@ -191,17 +206,7 @@ def main():
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
-        preview = input("\nWould you like to preview the data? Enter yes or no\n")
-        if preview == 'yes':
-            try:
-                lines = int(input("How many lines?  Enter a valid number.\n"))
-                print(df.head(lines))
-                time.sleep(10)
-            except:
-                print("invalid number")
-
-
-
+        display_data(df)
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
